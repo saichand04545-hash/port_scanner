@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="IP Port Scanner — Scan an authorized system for open TCP ports. A beginner-friendly cybersecurity learning tool." />
+  <title>IP Port Scanner | Cybersecurity Learning Tool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo-group">
+        <div class="logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="18" stroke="#00d4ff" stroke-width="2"/>
+            <circle cx="20" cy="20" r="12" stroke="#00d4ff" stroke-width="1.5" stroke-dasharray="4 2"/>
+            <circle cx="20" cy="20" r="4" fill="#00d4ff"/>
+            <line x1="20" y1="2" x2="20" y2="8" stroke="#00d4ff" stroke-width="2"/>
+            <line x1="38" y1="20" x2="32" y2="20" stroke="#00d4ff" stroke-width="2"/>
+            <line x1="20" y1="38" x2="20" y2="32" stroke="#00d4ff" stroke-width="2"/>
+            <line x1="2" y1="20" x2="8" y2="20" stroke="#00d4ff" stroke-width="2"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="site-title">IP PORT SCANNER</h1>
+          <p class="site-subtitle">Scan an authorized system for open TCP ports</p>
+        </div>
+      </div>
+      <div class="header-badge">
+        <span class="badge-dot"></span>
+        <span class="badge-text">Educational Tool</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════
+       WARNING BANNER
+  ═══════════════════════════════════════════ -->
+  <div class="warning-banner" role="alert">
+    <svg class="warning-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+    </svg>
+    <strong>Only scan systems you own or have explicit permission to test.</strong>
+    &nbsp;Unauthorized scanning may be illegal and unethical.
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       MAIN CONTENT
+  ═══════════════════════════════════════════ -->
+  <main class="container" id="main-content">
+
+    <!-- ── Scanner Panel ─────────────────────── -->
+    <section class="panel scanner-panel" aria-labelledby="scan-heading">
+      <h2 class="panel-title" id="scan-heading">
+        <span class="panel-icon" aria-hidden="true">⚡</span>
+        Scanner Configuration
+      </h2>
+
+      <form id="scan-form" novalidate>
+        <div class="form-grid">
+
+          <!-- Target IP -->
+          <div class="form-group full-width">
+            <label for="target-ip" class="form-label">Target IP Address</label>
+            <div class="input-wrapper">
+              <span class="input-prefix" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.309-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.976.544l.062.029.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clip-rule="evenodd"/></svg>
+              </span>
+              <input
+                type="text"
+                id="target-ip"
+                name="target-ip"
+                class="form-input"
+                placeholder="e.g. 127.0.0.1"
+                value="127.0.0.1"
+                autocomplete="off"
+                spellcheck="false"
+                aria-required="true"
+                aria-describedby="ip-hint"
+              />
+            </div>
+            <span class="form-hint" id="ip-hint">Enter a valid IPv4 address (e.g. 127.0.0.1)</span>
+          </div>
+
+          <!-- Start Port -->
+          <div class="form-group">
+            <label for="start-port" class="form-label">Start Port</label>
+            <div class="input-wrapper">
+              <span class="input-prefix" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10.75 10.818v2.614A3.13 3.13 0 0011.888 13c.482-.315.612-.648.612-.875 0-.227-.13-.56-.612-.875a3.13 3.13 0 00-1.138-.432zM8.33 8.62c.053.055.115.11.184.164.208.16.46.284.736.363V6.603a2.45 2.45 0 00-.35.13c-.14.065-.27.143-.386.233-.377.292-.514.627-.514.9 0 .181.159.476.33.734z"/><path fill-rule="evenodd" d="M9.99 2C5.578 2 2 5.526 2 9.97 2 14.41 5.578 18 9.99 18S18 14.41 18 9.97C18 5.526 14.402 2 9.99 2zM9 6.04a1 1 0 011-1h.01a1 1 0 110 2V8a1 1 0 110 2v.185a4.377 4.377 0 011.854.98C12.397 11.69 13 12.637 13 13.5c0 .863-.603 1.81-1.136 2.336a4.377 4.377 0 01-1.854.98V18a1 1 0 11-2 0v-1.184a4.377 4.377 0 01-1.854-.98C5.603 15.31 5 14.363 5 13.5c0-.863.603-1.81 1.136-2.336A4.377 4.377 0 018 10.185V9H8a1 1 0 010-2h1V6.04z" clip-rule="evenodd"/></svg>
+              </span>
+              <input
+                type="number"
+                id="start-port"
+                name="start-port"
+                class="form-input"
+                placeholder="1"
+                value="1"
+                min="1"
+                max="65535"
+                aria-required="true"
+              />
+            </div>
+          </div>
+
+          <!-- End Port -->
+          <div class="form-group">
+            <label for="end-port" class="form-label">End Port</label>
+            <div class="input-wrapper">
+              <span class="input-prefix" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10.75 10.818v2.614A3.13 3.13 0 0011.888 13c.482-.315.612-.648.612-.875 0-.227-.13-.56-.612-.875a3.13 3.13 0 00-1.138-.432zM8.33 8.62c.053.055.115.11.184.164.208.16.46.284.736.363V6.603a2.45 2.45 0 00-.35.13c-.14.065-.27.143-.386.233-.377.292-.514.627-.514.9 0 .181.159.476.33.734z"/><path fill-rule="evenodd" d="M9.99 2C5.578 2 2 5.526 2 9.97 2 14.41 5.578 18 9.99 18S18 14.41 18 9.97C18 5.526 14.402 2 9.99 2zM9 6.04a1 1 0 011-1h.01a1 1 0 110 2V8a1 1 0 110 2v.185a4.377 4.377 0 011.854.98C12.397 11.69 13 12.637 13 13.5c0 .863-.603 1.81-1.136 2.336a4.377 4.377 0 01-1.854.98V18a1 1 0 11-2 0v-1.184a4.377 4.377 0 01-1.854-.98C5.603 15.31 5 14.363 5 13.5c0-.863.603-1.81 1.136-2.336A4.377 4.377 0 018 10.185V9H8a1 1 0 010-2h1V6.04z" clip-rule="evenodd"/></svg>
+              </span>
+              <input
+                type="number"
+                id="end-port"
+                name="end-port"
+                class="form-input"
+                placeholder="1024"
+                value="1024"
+                min="1"
+                max="65535"
+                aria-required="true"
+              />
+            </div>
+          </div>
+
+        </div><!-- /.form-grid -->
+
+        <!-- Error message area -->
+        <div id="error-msg" class="error-message hidden" role="alert" aria-live="assertive"></div>
+
+        <!-- Action Buttons -->
+        <div class="button-row">
+          <button type="submit" id="btn-scan" class="btn btn-primary" aria-label="Start port scan">
+            <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
+            Scan
+          </button>
+          <button type="button" id="btn-stop" class="btn btn-danger" disabled aria-label="Stop the current scan">
+            <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"/></svg>
+            Stop Scan
+          </button>
+          <button type="button" id="btn-clear" class="btn btn-secondary" aria-label="Clear results">
+            <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+            Clear Results
+          </button>
+          <button type="button" id="btn-export" class="btn btn-accent" disabled aria-label="Export results as CSV">
+            <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            Export Results
+          </button>
+        </div>
+
+      </form><!-- /#scan-form -->
+    </section>
+
+    <!-- ── Progress Section ──────────────────── -->
+    <section id="progress-section" class="panel progress-panel hidden" aria-labelledby="progress-heading" aria-live="polite">
+      <h2 class="panel-title" id="progress-heading">
+        <span class="panel-icon" aria-hidden="true">📡</span>
+        Scan Progress
+      </h2>
+      <div class="progress-status-row">
+        <div class="pulse-dot" id="pulse-dot" aria-hidden="true"></div>
+        <span id="progress-label" class="progress-label">Initializing...</span>
+      </div>
+      <div class="progress-bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-labelledby="progress-heading">
+        <div class="progress-bar-fill" id="progress-bar"></div>
+      </div>
+      <div class="progress-meta">
+        <span id="progress-percent">0%</span>
+        <span id="progress-ports-detail"></span>
+      </div>
+    </section>
+
+    <!-- ── Stats Cards ───────────────────────── -->
+    <section id="stats-section" class="stats-grid hidden" aria-label="Scan statistics">
+      <div class="stat-card" id="stat-target">
+        <div class="stat-icon target-icon" aria-hidden="true">🎯</div>
+        <div class="stat-info">
+          <span class="stat-label">Target IP</span>
+          <span class="stat-value mono" id="stat-target-val">—</span>
+        </div>
+      </div>
+      <div class="stat-card" id="stat-scanned">
+        <div class="stat-icon scanned-icon" aria-hidden="true">🔍</div>
+        <div class="stat-info">
+          <span class="stat-label">Ports Scanned</span>
+          <span class="stat-value" id="stat-scanned-val">—</span>
+        </div>
+      </div>
+      <div class="stat-card" id="stat-open">
+        <div class="stat-icon open-icon" aria-hidden="true">✅</div>
+        <div class="stat-info">
+          <span class="stat-label">Open Ports</span>
+          <span class="stat-value open-count" id="stat-open-val">—</span>
+        </div>
+      </div>
+      <div class="stat-card" id="stat-closed">
+        <div class="stat-icon closed-icon" aria-hidden="true">🔒</div>
+        <div class="stat-info">
+          <span class="stat-label">Closed Ports</span>
+          <span class="stat-value closed-count" id="stat-closed-val">—</span>
+        </div>
+      </div>
+      <div class="stat-card" id="stat-time">
+        <div class="stat-icon time-icon" aria-hidden="true">⏱</div>
+        <div class="stat-info">
+          <span class="stat-label">Scan Time</span>
+          <span class="stat-value" id="stat-time-val">—</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Results Panel ─────────────────────── -->
+    <section id="results-section" class="panel results-panel hidden" aria-labelledby="results-heading">
+      <div class="results-header">
+        <h2 class="panel-title" id="results-heading">
+          <span class="panel-icon" aria-hidden="true">📋</span>
+          Scan Results
+        </h2>
+        <div class="results-filters">
+          <button class="filter-btn active" id="filter-all" data-filter="all">All</button>
+          <button class="filter-btn" id="filter-open" data-filter="OPEN">Open Only</button>
+          <button class="filter-btn" id="filter-closed" data-filter="CLOSED">Closed Only</button>
+        </div>
+      </div>
+
+      <div class="table-wrapper" role="region" aria-labelledby="results-heading" tabindex="0">
+        <table class="results-table" id="results-table" aria-live="polite">
+          <thead>
+            <tr>
+              <th scope="col">Port</th>
+              <th scope="col">Status</th>
+              <th scope="col">Service</th>
+            </tr>
+          </thead>
+          <tbody id="results-tbody">
+            <!-- Rows injected by JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <p>
+      IP Port Scanner &mdash; Educational Cybersecurity Tool &mdash;
+      Use responsibly &amp; ethically.
+    </p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
